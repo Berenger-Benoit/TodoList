@@ -1,13 +1,26 @@
 {% extends 'base.html.twig' %}
 
- {% block body %}
+{% block body %}
 
- 	<h2>Détail tâche</h2>
-	<div><label>Intitulé :</label> {{ todo.task }}</div>
-	<div><label>Statut :</label> <i>{{ todo.status }}</i></div>
-	{# TODO: afficher la date au format FR #}
-    <div><label>Créée le :</label> <i>{{ todo.created_at }}</i></div>
+	<h2>Détail tâche</h2>
 
- 	<p><a href="{{ path("todo_list") }}">Retour liste</a></p>
+	<div>
+		<label>Intitulé :</label>
+		{{ todo.title }}</div>
 
- {% endblock %}
+	<div>
+		<label>Statut :</label>
+		<i>{{ status }}</i>
+	</div>
+
+
+	<div>
+		<label>Créée le :</label>
+		<i>{{ todo.createdAt|date("d/m/Y à H:i") }}</i>
+	</div>
+
+	<p>
+		<a href="{{ path("todo_list") }}">Retour liste</a>
+	</p>
+
+{% endblock %}

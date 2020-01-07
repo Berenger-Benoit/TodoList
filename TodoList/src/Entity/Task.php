@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +23,7 @@ class Task
     private $title;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $status;
 
@@ -35,7 +36,15 @@ class Task
     {
         $this->createdAt = new \DateTime;
         
+        
+        
     }
+
+    public function __toString()
+    {
+      return $this->title;
+    }
+
 
     public function getId(): ?int
     {
