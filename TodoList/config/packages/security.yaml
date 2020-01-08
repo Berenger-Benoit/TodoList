@@ -26,9 +26,20 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/todos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/todo, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        
+          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+          - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+          - { path: ^/todos, roles: ROLE_USER }
+          - { path: ^/todo, roles: ROLE_USER }
+        #   - { path: ^/admin/movie, roles: ROLE_PARTENAIRE }
+        #   - { path: ^/admin/genre, roles: ROLE_PARTENAIRE }
+        #   - { path: ^/admin/job, roles: ROLE_PARTENAIRE }
+        #   - { path: ^/admin/user, roles: ROLE_ADMIN }
+        #   - { path: ^/admin, roles: ROLE_ADMIN }
+          - { path: ^/\w+.*, roles: ROLE_USER }
+          - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER,ROLE_PARTENAIRE
+        ROLE_PARTENAIRE: ROLE_USER
 
 
