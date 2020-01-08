@@ -31,7 +31,7 @@
         key correspond à l'id car key est l'index de notre tâche dans le tableau todos
             {% for clé, valeur in tableau %}
         #}
-        <form action="{#{ path('todo_delete', { 'id' : key } )}#}" method="post">
+        <form action="{{ path('todo_delete', { 'id' : todo.id } )}}" method="post">
             <button class="btn btn-xs btn-link" type="submit" name="delete"><span class="glyphicon glyphicon-remove"></span></button>
         </form>
 
@@ -49,7 +49,7 @@
 
             <!-- lien vers tâche -->
             <a href="{{ path('todo_show', { 'id' : todo.id }) }}">
-                {% if todo.status == true %}
+                {% if todo.status  %}
                 <!-- tâche effectuée -->
                 <s>{{ todo.title }}</s>
                 {% else %}

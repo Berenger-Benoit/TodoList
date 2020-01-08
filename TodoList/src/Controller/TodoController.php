@@ -51,7 +51,7 @@ class TodoController extends AbstractController
         $todo = $taskRepository->find($id);
   
         if($todo->getStatus() == false){
-            $status = 'undone';
+            $status = '';
         }
         if($todo->getStatus() == true){
             $status = 'done';
@@ -70,33 +70,27 @@ class TodoController extends AbstractController
      *  name="todo_set_status",
      *  requirements={
      *          "id" = "\d+",
-     *          "status" = "false|true"
+     *          "status" = "undone|done"
      *          },
      *           methods={"GET", "POST"},
      * 
      *  )
      * 
      */
-    public function todoSetStatus($id, $status, Task $task)
+    public function todoSetStatus($id, $status, Task $task,TaskRepository $taskRepository)
     {
+       $entityManager = $this->getDoctrine()->getManager();
+       $task = $taskRepository->find($id);
 
+       if($task->setStatus( !$task->getStatus())) {
+        $entityManager->flush();
+        $this->addFlash(
+                 'info',
+                 '<strong>Super !</strong> La tâche a bien été marquée comme '.$status.' !'
+             );
         
-             dd($task);
-         
-
-          // On modifie le statut de la tâche
-        // On récupère le booléen que retourne setStatus()
-        // dans un if pour savoir si ça a fonctionné
-        if ($task->setStatus($status)) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($task);
-            $entityManager->flush();
-            $this->addFlash(
-                'info',
-                '<strong>Super !</strong> La tâche a bien été marquée comme '.$status.' !'
-           
-            );
-        } else {
+       }
+         else {
             $this->addFlash(
                 'danger',
                 '<strong>Attention !</strong> La tâche n\'as pas été modifiée car elle n\'existe pas !'
@@ -106,6 +100,7 @@ class TodoController extends AbstractController
         // On redirige vers la liste des tâches
         return $this->redirectToRoute('todo_list');
     }
+
     /**
      * Ajout d'une tâche
      *
@@ -117,8 +112,9 @@ class TodoController extends AbstractController
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
+       
         $form->handleRequest($request);
-        $task->setStatus(false);
+        
   
         if ($form->isSubmitted() && $form->isValid()) {
           
@@ -138,5 +134,22 @@ class TodoController extends AbstractController
         }
      
      
+    }
+
+    /**
+     * Suppression d'une tâche
+     *
+     * @Route("/todo/delete/{id}", name="todo_delete", requirements={"id" = "\d+"})
+     */
+    public function deleteTask(Request $request, Task $task)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($task);
+        $entityManager->flush();
+        $this->addflash(
+            'danger',
+             'La tâche «'. $task .'» a bien été supprimée !'
+        );
+        return $this->redirectToRoute('todo_list');
     }
 }
