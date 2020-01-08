@@ -44,7 +44,7 @@ class TodoController extends AbstractController
     /**
      * Affichage d'une tâche
      *
-     * @Route("/todo/{id}", name="todo_show", requirements={"id" = "\d+"})
+     * @Route("/todo/{id}", name="todo_show", requirements={"id" = "\d+"}, methods={"GET"})
      */
     public function todoShow($id, TaskRepository $taskRepository)
     {
@@ -120,6 +120,7 @@ class TodoController extends AbstractController
           
             
             $entityManager = $this->getDoctrine()->getManager();
+            $task->setStatus(false);
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -139,7 +140,7 @@ class TodoController extends AbstractController
     /**
      * Suppression d'une tâche
      *
-     * @Route("/todo/delete/{id}", name="todo_delete", requirements={"id" = "\d+"})
+     * @Route("/todo/delete/{id}", name="todo_delete", requirements={"id" = "\d+"}, methods={"POST"})
      */
     public function deleteTask(Request $request, Task $task)
     {
