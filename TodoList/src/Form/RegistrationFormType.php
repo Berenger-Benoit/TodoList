@@ -22,11 +22,14 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'required' => true,
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'trim' => true,
             ])
             ->add('email', EmailType::class, [
                 'required' => true,
-                'label' => 'Email'
+                'label' => 'Email',
+                'trim' => true,
+
             ] )
             
            
@@ -48,6 +51,7 @@ class RegistrationFormType extends AbstractType
             // ])
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
+                'trim' => true,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe n\'est pas identique',
                 'options' => ['attr' => ['class' => 'password-field']],
