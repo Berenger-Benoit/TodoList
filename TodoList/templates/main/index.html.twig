@@ -3,23 +3,15 @@
 {% block body %}
 
 	<div class="row">
-		<div class="col-xs-12">
-			<h2>A propos</h2>
-			<p>Bienvenue sur TodoApp, votre nouveau gestionnaire de tâches !</p>
-			<p>Vous pouvez
-				<a href="{{ path('todo_list') }}">afficher la liste des tâches</a>
-				ou ajouter tout de suite une nouvelle tâche :</p>
-
-			<h3>Nouvelle tâche</h3>
-			<div class="row">
-				<div class="col-md-4 col-lg-6">
-					{{form_start(form)}}
-					{{ form_widget(form) }}
-					<button type="submit" class="btn btn-primary">Ajouter</button>
-					{{form_end(form)}}
-
-				</div>
+		<div class="main col-xs-12">
+			
+			<h2>Bienvenue sur TodoApp, votre nouveau gestionnaire de tâches pour organiser votre quotidien !</h2>
+			<div class="d-flex justify-content-center">
+			<a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
 			</div>
+			
+
+		
 
 
 		</div>

@@ -35,9 +35,6 @@ class Task
     public function __construct()
     {
         $this->createdAt = new \DateTime;
-        
-        
-        
     }
 
     public function __toString()

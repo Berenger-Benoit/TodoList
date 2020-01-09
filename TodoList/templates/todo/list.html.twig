@@ -1,82 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des tâches - {{ parent() }}{% endblock %}
+{% block title %}Liste des tâches -
+	{{ parent() }}
+{% endblock %}
 
 {% block body %}
 
-<h2>Liste des tâches</h2>
+	<h2>Liste des tâches</h2>
 
-{# 
-    j'affiche un flash message quand j'ajoute une nouvelle tache ou quand elle est mise à jour
- #}
-{% for flashType, messages in app.flashes(['success', 'info', 'warning', 'danger']) %}
-    {% for message in messages %}
-        <div class="alert alert-{{ flashType }} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message|raw }}
-        </div>
-    {% endfor %}
-{% endfor %}
-<ul class="list-group">
+	{# 
+	    j'affiche un flash message quand j'ajoute une nouvelle tache ou quand elle est mise à jour
+	 #}
+	{% for flashType, messages in app.flashes(['success', 'info', 'warning', 'danger']) %}
+		{% for message in messages %}
+			<div class="alert alert-{{ flashType }} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				{{ message|raw }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+	<ul class="list-group">
 
-    {% for key, todo in todos %}
-
-
-    <li class="list-group-item">
-
-        {#
-        Le formulaire existait déjà. Il n'a aucun input.
-        Il sert uniquement à aller vers une route en méthode POST lors du clic de l'utilisateur.
-        On ajoute la route vesr todo_delete en précisant l'id concerné
-        key correspond à l'id car key est l'index de notre tâche dans le tableau todos
-            {% for clé, valeur in tableau %}
-        #}
-        <form action="{{ path('todo_delete', { 'id' : todo.id } )}}" method="post">
-            <button class="btn btn-xs btn-link" type="submit" name="delete"><span class="glyphicon glyphicon-remove"></span></button>
-        </form>
-
-        <span>
-        
-            {% if todo.status == true %}
-            <!-- tâche effectuée -->
-            <a href="{{ path('todo_set_status', { 'id' : todo.id, status : 'undone'  } ) }}"><span
-                    class="glyphicon glyphicon-check"></span></a>
-            {% else %}
-            <!-- tâche non effectuée -->
-            <a href="{{ path('todo_set_status', { 'id' : todo.id, status : 'done'  } ) }}"><span
-                    class="glyphicon glyphicon-unchecked"></span></a>
-            {% endif %}
-
-            <!-- lien vers tâche -->
-            <a href="{{ path('todo_show', { 'id' : todo.id }) }}">
-                {% if todo.status  %}
-                <!-- tâche effectuée -->
-                <s>{{ todo.title }}</s>
-                {% else %}
-                <!-- tâche non effectuée -->
-                {{ todo.title }}
-                {% endif %}
-            </a>
-        </span>
-    </li>
-    {% endfor %}
-</ul>
-
-<div class="row">
-<div class="col">
+		{% for key, todo in todos %}
 
 
-{{ form_start(form, {'action': path('todo_add'), 'method': 'POST'}) }}
- {{ form_widget(form) }}
-<button  type="submit" class="btn btn-primary">Ajouter</button>
+			<li
+				class="list-group-item">
 
-{{form_end(form)}}
+				{#
+				        Le formulaire existait déjà. Il n'a aucun input.
+				        Il sert uniquement à aller vers une route en méthode POST lors du clic de l'utilisateur.
+				        On ajoute la route vesr todo_delete en précisant l'id concerné
+				        key correspond à l'id car key est l'index de notre tâche dans le tableau todos
+				            {% for clé, valeur in tableau %}
+				        #}
+				<form action="{{ path('todo_delete', { 'id' : todo.id } )}}" method="post">
+					<button class="btn btn-xs btn-link" type="submit" name="delete">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+				</form>
+
+				<span>
+
+					{% if todo.status == true %}
+						<!-- tâche effectuée -->
+						<a href="{{ path('todo_set_status', { 'id' : todo.id, status : 'undone' } ) }}">
+							<span class="glyphicon glyphicon-check"></span>
+						</a>
+					{% else %}
+						<!-- tâche non effectuée -->
+						<a href="{{ path('todo_set_status', { 'id' : todo.id, status : 'done' } ) }}">
+							<span class="glyphicon glyphicon-unchecked"></span>
+						</a>
+					{% endif %}
+
+					<!-- lien vers tâche -->
+					<a href="{{ path('todo_show', { 'id' : todo.id }) }}">
+						{% if todo.status  %}
+							<!-- tâche effectuée -->
+							<s>{{ todo.title }}</s>
+						{% else %}
+							<!-- tâche non effectuée -->
+							{{ todo.title }}
+						{% endif %}
+					</a>
+				</span>
+			</li>
+		{% endfor %}
+	</ul>
+    
+ 
+	<div class="row">
+		<div class="col">
 
 
-</div>
+			{{ form_start(form, {'action': path('todo_add'), 'method': 'POST'}) }}
+			{{ form_widget(form) }}
+			<button type="submit" class="btn btn-primary">Ajouter</button>
 
-</div>
+			{{form_end(form)}}
 
-<hr>
+
+		</div>
+
+	</div>
+
+
+	<hr>
 
 {% endblock %}

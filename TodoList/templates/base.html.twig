@@ -4,7 +4,7 @@
 
  <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}TodoApp{% endblock %}</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -18,12 +18,18 @@
         <h1>TodoApp</h1>
         <nav>
             <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="{{ path('homepage') }}">A propos</a>
+                <li {% if app.request.attributes.get('_route') == 'homepage' %}class="active" {% endif %}>
+                    <a href="{{ path('homepage') }}">Accueil</a>
                 </li>
-                <li>
-                    <a href="{{ path('todo_list') }}">Todos</a>
+                <li {% if app.request.attributes.get('_route') ==  'app_register' %}class="active" {% endif %}>
+                    <a href="{{ path('app_register') }}">S'inscrire</a>
                 </li>
+                   {% if is_granted('IS_AUTHENTICATED_FULLY') == true %}
+                <li {% if app.request.attributes.get('_route') == 'todo_list' %}class="active" {% endif %}>
+                    <a href="{{ path('todo_list') }}">Liste</a>
+                </li>
+                    {% endif %}
+              
             </ul>
         </nav>
     </header>
