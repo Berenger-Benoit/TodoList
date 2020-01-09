@@ -8,11 +8,47 @@ body {
 	float: right;
 }
 .list-group-item:hover {
-	background-color: aliceblue;
+	background-color:#C0AF94;
 }
 .glyphicon {
 	font-size: 1.4em;
 	vertical-align: text-bottom;
 }
 
+.form-group {
+	display: flex;
+	flex-wrap: wrap;
+	width: 50%;
+	justify-content: center;
+}
+form {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+    padding: 0 15px;
+	margin-top: 15px;
+	align-items: center;
+    
+}
+.main {
+	width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+h3 {
+    text-align: center;
+}
 
+h2 {
+	text-align: center;
+}
+.row {
+    justify-content: center;
+}
+
+#register {
+	display: flex;
+	justify-content: center;
+}
