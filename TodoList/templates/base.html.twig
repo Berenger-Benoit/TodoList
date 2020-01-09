@@ -21,21 +21,34 @@
                 <li {% if app.request.attributes.get('_route') == 'homepage' %}class="active" {% endif %}>
                     <a href="{{ path('homepage') }}">Accueil</a>
                 </li>
+                  {% if is_granted('ROLE_USER') %}
+                  {% else %}
+                      
                 <li {% if app.request.attributes.get('_route') ==  'app_register' %}class="active" {% endif %}>
-                    <a href="{{ path('app_register') }}">S'inscrire</a>
+                    <a href="{{ path('app_register') }}">Inscription</a>
                 </li>
+              
+                  <li {% if app.request.attributes.get('_route') == 'app_login' %}class="active" {% endif %}>
+                    <a href="{{ path('app_login') }}">Identifiez-vous</a>
+                </li>
+                  {% endif %}
                    {% if is_granted('IS_AUTHENTICATED_FULLY') == true %}
                 <li {% if app.request.attributes.get('_route') == 'todo_list' %}class="active" {% endif %}>
                     <a href="{{ path('todo_list') }}">Liste</a>
                 </li>
                     {% endif %}
-              
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<li class="nav-item">
+                 <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+				{% endif %}
             </ul>
         </nav>
     </header>
     <main class="container">
         {% block body %}{% endblock %}
     </main>
+    <footer></footer>
     {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

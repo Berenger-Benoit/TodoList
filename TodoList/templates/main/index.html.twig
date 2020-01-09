@@ -4,14 +4,21 @@
 
 	<div class="row">
 		<div class="main col-xs-12">
-			
-			<h2>Bienvenue sur TodoApp, votre nouveau gestionnaire de tâches pour organiser votre quotidien !</h2>
-			<div class="d-flex justify-content-center">
-			<a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
-			</div>
-			
+			{% if app.user %}
+				<div class="mb-3">
+					Bon retour parmis nous !
+					{{ app.user.username }}
 
-		
+				</div>
+			{% endif %}
+
+			<h2>Bienvenue sur TodoApp, votre nouveau gestionnaire de tâches pour organiser votre quotidien !</h2>
+			{% if is_granted('ROLE_USER') %}
+				{% else %}
+					<div class="d-flex justify-content-center">
+						<a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
+					</div>
+			{% endif %}
 
 
 		</div>

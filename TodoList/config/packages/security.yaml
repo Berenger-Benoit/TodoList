@@ -16,6 +16,13 @@ security:
             security: false
         main:
             anonymous: lazy
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -30,16 +37,11 @@ security:
           - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
           - { path: ^/todos, roles: ROLE_USER }
           - { path: ^/todo, roles: ROLE_USER }
-        #   - { path: ^/admin/movie, roles: ROLE_PARTENAIRE }
-        #   - { path: ^/admin/genre, roles: ROLE_PARTENAIRE }
-        #   - { path: ^/admin/job, roles: ROLE_PARTENAIRE }
-        #   - { path: ^/admin/user, roles: ROLE_ADMIN }
-        #   - { path: ^/admin, roles: ROLE_ADMIN }
           - { path: ^/\w+.*, roles: ROLE_USER }
           - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_USER,ROLE_PARTENAIRE
-        ROLE_PARTENAIRE: ROLE_USER
+    # role_hierarchy:
+    #     ROLE_ADMIN: ROLE_USER,ROLE_PARTENAIRE
+    #     ROLE_PARTENAIRE: ROLE_USER
 
 
